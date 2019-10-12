@@ -11,6 +11,11 @@ zuul:
   prefix: /api  #路由前缀
   routes:
     item-service: /item/**
+    upload-service: /upload/**
+#    upload-service:
+#      path: /upload/**
+#      serviceId: upload-service
+#      strip-prefix: false #不去掉前缀
 hystrix:
   command:
     default:
