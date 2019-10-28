@@ -38,7 +38,7 @@ public class BrandServiceImpl implements BrandService {
         }
         List<Brand> list = brandMapper.selectByExample(example);
         if (CollectionUtils.isEmpty(list)) {
-            throw new LyException(ExceptionEnum.CATEGORY_NOT_FOUND);
+            throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
         }
         //解析分页结果
         PageInfo<Brand> info = new PageInfo<>(list);
@@ -59,5 +59,32 @@ public class BrandServiceImpl implements BrandService {
                 throw new LyException(ExceptionEnum.BRAND_SAVE_ERROR);
             }
         }
+    }
+
+    @Override
+    public List<Brand> queryAllByCid(Long cid) {
+        List<Brand> list = brandMapper.queryAllByCid(cid);
+        if (CollectionUtils.isEmpty(list)) {
+            throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
+        }
+        return list;
+    }
+
+    @Override
+    public Brand queryBrandById(Long id) {
+        Brand brand = brandMapper.selectByPrimaryKey(id);
+        if (brand == null) {
+            throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
+        }
+        return brand;
+    }
+
+    @Override
+    public List<Brand> queryBrandByIds(List<Long> ids) {
+        List<Brand> brands = brandMapper.selectByIdList(ids);
+        if (CollectionUtils.isEmpty(brands)) {
+            throw new LyException(ExceptionEnum.BRAND_NOT_FOUND);
+        }
+        return brands;
     }
 }

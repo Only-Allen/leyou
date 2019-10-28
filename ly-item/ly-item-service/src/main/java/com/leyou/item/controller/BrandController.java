@@ -1,7 +1,5 @@
 package com.leyou.item.controller;
 
-import com.leyou.common.enums.ExceptionEnum;
-import com.leyou.common.exception.LyException;
 import com.leyou.common.vo.PageResult;
 import com.leyou.item.pojo.Brand;
 import com.leyou.item.service.BrandService;
@@ -35,5 +33,21 @@ public class BrandController {
     public ResponseEntity<Void> saveBrand(Brand brand, @RequestParam("categories") List<Long> cids) {
         brandService.saveBrand(brand, cids);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("cid/{cid}")
+    public ResponseEntity<List<Brand>> queryAllByCid(@PathVariable("cid") Long cid) {
+        return ResponseEntity.ok(brandService.queryAllByCid(cid));
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Brand> queryBrandById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(brandService.queryBrandById(id));
+    }
+
+
+    @GetMapping("/list")
+    public ResponseEntity<List<Brand>> queryBrandByIds(@RequestParam("ids") List<Long> ids) {
+        return ResponseEntity.ok(brandService.queryBrandByIds(ids));
     }
 }
