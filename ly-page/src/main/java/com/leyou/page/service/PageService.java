@@ -57,10 +57,20 @@ public class PageService {
         context.setVariables(loadModel(spuId));
 
         File file = new File("D:\\IDEA\\leyou\\template", spuId + ".html");
+        if (file.exists()) {
+            file.delete();
+        }
         try (PrintWriter writer = new PrintWriter(file, "UTF-8")) {
             templateEngine.process("item", context, writer);
         } catch (Exception e) {
             log.error("[静态页服务] 生成静态页异常！", e);
+        }
+    }
+
+    public void deleteHtml(Long spuId) {
+        File file = new File("D:\\IDEA\\leyou\\template", spuId + ".html");
+        if (file.exists()) {
+            file.delete();
         }
     }
 }

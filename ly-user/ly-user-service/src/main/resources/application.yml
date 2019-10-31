@@ -1,8 +1,8 @@
 server:
-  port: 8081
+  port: 8085
 spring:
   application:
-    name: item-service
+    name: user-service
   datasource:
     url: jdbc:mysql://localhost:3306/leyou
     username: root
@@ -28,6 +28,7 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1
-#mybatis:
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+mybatis:
+  type-aliases-package: com.leyou.user.pojo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
