@@ -21,6 +21,8 @@ spring:
         multiplier: 2
       exchange: ly.item.exchange
     publisher-confirms: true
+  redis:
+    host: 192.168.22.248
 eureka:
   client:
     service-url:

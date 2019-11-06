@@ -9,11 +9,14 @@ eureka:
       defaultZone: http://127.0.0.1:10086/eureka
 zuul:
   prefix: /api  #路由前缀
+  add-host-header: true
+  sensitive-headers:
   routes:
     item-service: /item/**
     upload-service: /upload/**
     search-service: /search/**
     user-service: /user/**
+    auth-service: /auth/**
 #    upload-service:
 #      path: /upload/**
 #      serviceId: upload-service
@@ -31,3 +34,7 @@ ribbon:
   OkToRetryOnAllOperations: false # 是否对所有操作重试
   MaxAutoRetriesNextServer: 0 # 同一服务不同实例的重试次数
   MaxAutoRetries: 0 # 同一实例的重试次数
+ly:
+  jwt:
+    pubKeyPath: D:\IDEA\leyou\ras_tmp\rsa.pub # 公钥地址
+    cookieName: LY_TOKEN

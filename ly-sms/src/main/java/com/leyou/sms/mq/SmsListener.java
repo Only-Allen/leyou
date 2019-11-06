@@ -41,9 +41,8 @@ public class SmsListener {
         if (StringUtils.isBlank(phone)) {
             return;
         }
-        log.info("[短信服务] before 发送手机验证码，手机号：{}, code:{}", phone, msg.get("code"));
+        log.info("[短信服务] 发送手机验证码，手机号：{}, code:{}", phone, msg.get("code"));
 //        smsUtils.sendSms(phone, smsProperties.getSignName(),
 //                smsProperties.getVerifyCodeTemplate(), JsonUtils.toString(msg));
-        log.info("[短信服务] after 发送手机验证码，手机号：{}, code:{}", phone, msg.get("code"));
     }
 }
