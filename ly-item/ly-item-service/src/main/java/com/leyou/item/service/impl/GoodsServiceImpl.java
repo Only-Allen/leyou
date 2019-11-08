@@ -150,21 +150,27 @@ public class GoodsServiceImpl implements GoodsService {
         if (CollectionUtils.isEmpty(skuList)) {
             throw new LyException(ExceptionEnum.GOODS_SKU_NOT_FOUND);
         }
-        //查询库存
-        for (Sku s : skuList) {
-            Stock stock = stockMapper.selectByPrimaryKey(s.getId());
-            if (stock == null) {
-                throw new LyException(ExceptionEnum.GOODS_STOCK_NOT_FOUND);
-            }
-            s.setStock(stock.getStock());
-        }
         List<Long> ids = skuList.stream().map(Sku::getId).collect(Collectors.toList());
+        queryStock(ids, skuList);
+        return skuList;
+    }
+
+    @Override
+    public List<Sku> queryAllSkuByIds(List<Long> ids) {
+        List<Sku> skuList = skuMapper.selectByIdList(ids);
+        if (CollectionUtils.isEmpty(skuList)) {
+            throw new LyException(ExceptionEnum.GOODS_SKU_NOT_FOUND);
+        }
+        queryStock(ids, skuList);
+        return skuList;
+    }
+
+    private void queryStock(List<Long> ids, List<Sku> skuList) {
         List<Stock> stockList = stockMapper.selectByIdList(ids);
         if (CollectionUtils.isEmpty(stockList)) {
             throw new LyException(ExceptionEnum.GOODS_STOCK_NOT_FOUND);
         }
         Map<Long, Integer> stockMap = stockList.stream().collect(Collectors.toMap(Stock::getSkuId, Stock::getStock));
         skuList.forEach(s -> s.setStock(stockMap.get(s.getId())));
-        return skuList;
     }
 }

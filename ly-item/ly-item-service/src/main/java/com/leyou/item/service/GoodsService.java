@@ -18,4 +18,6 @@ public interface GoodsService {
     List<Sku> queryAllSkuBySpuId(Long spuId);
 
     Spu querySpuById(Long id);
+
+    List<Sku> queryAllSkuByIds(List<Long> ids);
 }
