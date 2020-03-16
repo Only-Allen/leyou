@@ -13,6 +13,10 @@ public interface GoodsService {
 
     void saveGoods(Spu spu);
 
+    void deleteGoods(Long id);
+
+    void updateGoodsSaleable(Long id, Boolean saleable);
+
     SpuDetail queryDetailById(Long id);
 
     List<Sku> queryAllSkuBySpuId(Long spuId);

@@ -33,6 +33,18 @@ public class GoodsController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @DeleteMapping("/goods")
+    public ResponseEntity<Void> deleteGoods(Long id) {
+        goodsService.deleteGoods(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping("/goods/saleable")
+    public ResponseEntity<Void> updateGoodsSaleable(Long id, Boolean saleable) {
+        goodsService.updateGoodsSaleable(id, saleable);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @GetMapping("/spu/{id}")
     public ResponseEntity<Spu> querySpuById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(goodsService.querySpuById(id));

@@ -47,6 +47,7 @@ public class GoodsServiceImpl implements GoodsService {
 
         Example example = new Example(Spu.class);
         Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("valid", true);//是否有效，0已删除，1有效
         if (saleable != null) {
             if (saleable != 0) {//0:全部, 1:上架, 2:下架
                 criteria.andEqualTo("saleable", saleable == 1);
@@ -131,6 +132,26 @@ public class GoodsServiceImpl implements GoodsService {
             throw new LyException(ExceptionEnum.GOODS_SAVE_ERROR);
         }
         amqpTemplate.convertAndSend("item.insert", spu.getId());
+    }
+
+    @Override
+    public void deleteGoods(Long id) {
+        int count = spuMapper.deleteSpu(id);
+        if (count != 1) {
+            throw new LyException(ExceptionEnum.GOODS_DELETE_ERROR);
+        }
+    }
+
+    @Override
+    public void updateGoodsSaleable(Long id, Boolean saleable) {
+//        int count = spuMapper.updateSpuSaleable(id, saleable);
+        Spu spu = new Spu();
+        spu.setId(id);
+        spu.setSaleable(saleable);
+        int count = spuMapper.updateByPrimaryKeySelective(spu);
+        if (count != 1) {
+            throw new LyException(ExceptionEnum.GOODS_UPDATE_ERROR);
+        }
     }
 
     @Override
